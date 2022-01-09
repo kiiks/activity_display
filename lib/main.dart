@@ -52,7 +52,7 @@ class _HomeState extends State<Home> {
   // UI variables
 
   final double margin = 10;
-  final double boxWidth = 600;
+  final double boxWidth = 700;
 
   // Vide player variables
 
@@ -93,9 +93,12 @@ class _HomeState extends State<Home> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        AspectRatio(
-                            aspectRatio: _mazeVideoController.value.aspectRatio,
-                            child: VideoPlayer(_mazeVideoController)),
+                        Container(
+                          margin: const EdgeInsets.all(15),
+                          child: AspectRatio(
+                              aspectRatio: 1.5,
+                              child: VideoPlayer(_mazeVideoController)),
+                        ),
                         Container(
                             margin: const EdgeInsets.all(5),
                             padding: const EdgeInsets.all(10),
@@ -197,7 +200,7 @@ class _HomeState extends State<Home> {
                                     CustomPaint(
                                         foregroundPainter:
                                             // TODO : Color state management
-                                            StateIndicatorPainter(),
+                                            BigStateIndicatorPainter(),
                                         child: const SizedBox(
                                           width: 75,
                                           height: 75,
@@ -205,7 +208,7 @@ class _HomeState extends State<Home> {
                                     CustomPaint(
                                         foregroundPainter:
                                             // TODO : Color state management
-                                            StateIndicatorPainter(),
+                                            BigStateIndicatorPainter(),
                                         child: const SizedBox(
                                           width: 75,
                                           height: 75,
@@ -213,7 +216,7 @@ class _HomeState extends State<Home> {
                                     CustomPaint(
                                         foregroundPainter:
                                             // TODO : Color state management
-                                            StateIndicatorPainter(),
+                                            BigStateIndicatorPainter(),
                                         child: const SizedBox(
                                           width: 75,
                                           height: 75,
@@ -372,10 +375,12 @@ class _HomeState extends State<Home> {
                         color: Color.fromARGB(26, 255, 255, 255)),
                     child: Column(
                       children: [
-                        AspectRatio(
-                            aspectRatio:
-                                _desertVideoController.value.aspectRatio,
-                            child: VideoPlayer(_desertVideoController)),
+                        Container(
+                          margin: const EdgeInsets.all(15),
+                          child: AspectRatio(
+                              aspectRatio: 1.5,
+                              child: VideoPlayer(_desertVideoController)),
+                        ),
                       ],
                     ),
                   ),
