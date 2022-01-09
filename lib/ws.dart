@@ -1,4 +1,5 @@
 import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:web_socket_channel/status.dart';
 
 /// 1. Être sur un réseau wifi
 /// 2. Donner l'adresse IP + port (+ potentiel endpoint)
@@ -9,6 +10,7 @@ class WebSocketManager {
   static final WebSocketManager _instance = WebSocketManager._init();
 
   WebSocketManager._init() {
+    // channel is null until ws is connected
     channel = WebSocketChannel.connect(Uri.parse(wsName));
   }
 
