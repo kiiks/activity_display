@@ -7,20 +7,22 @@ class WebSocketManager {
   static const wsName = "ws://192.168.4.1/ws";
   late WebSocketChannel channel;
 
-  static final WebSocketManager _instance = WebSocketManager._init();
-
-  WebSocketManager._init() {
+  WebSocketManager() {
     // channel is null until ws is connected
     channel = WebSocketChannel.connect(Uri.parse(wsName));
   }
 
-  factory WebSocketManager() {
-    return _instance;
+  void reconnect() {
+    channel = WebSocketChannel.connect(Uri.parse(wsName));
   }
 
   void listen({required Function(String data) didRecieve}) async {
     channel.stream.listen((message) {
+      print(message);
       didRecieve(message);
+    }, onDone: () {
+      print("FROM IMPLEM: WS Closed");
+      reconnect();
     });
   }
 }
