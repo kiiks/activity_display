@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:activity_display/errorPage.dart';
 import 'package:activity_display/services/types.dart';
 import 'package:activity_display/services/ws.dart';
 
@@ -25,15 +26,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Home(title: 'PALM Interface'),
+      home: ErrorPage(),
     );
   }
 }
 
 class Home extends StatefulWidget {
-  const Home({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -44,7 +43,7 @@ class _HomeState extends State<Home> {
 
   // Activity variables
 
-  final maxPressure = 150;
+  final maxPressure = 100;
 
   int nbDesertLEDsEnbaled = 0;
   int nbMazeLEDsEnbaled = 0;
@@ -67,10 +66,9 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    super.initState();
-
     wsManager.listen(didRecieve: didRecieveFromESP);
     initVideoControllers();
+    super.initState();
   }
 
   @override
@@ -558,14 +556,17 @@ class _HomeState extends State<Home> {
                         ),
                         FloatingActionButton(
                           onPressed: onDesert,
+                          heroTag: "desert",
                           child: const Text('DESERT'),
                         ),
                         FloatingActionButton(
                           onPressed: onPompe,
+                          heroTag: "pompe",
                           child: const Text('POMPE'),
                         ),
                         FloatingActionButton(
                           onPressed: onMaze,
+                          heroTag: "maze",
                           child: const Text('MAZE'),
                         ),
                       ],

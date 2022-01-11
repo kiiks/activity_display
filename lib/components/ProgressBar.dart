@@ -12,7 +12,7 @@ class CustomProgressBar extends StatefulWidget {
 }
 
 class _CustomProgressBarState extends State<CustomProgressBar> {
-  final int maxPressure = 150;
+  final int maxPressure = 100;
 
   @override
   Widget build(BuildContext context) {
