@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 
 class StateButton extends StatefulWidget {
-  const StateButton() : super();
+  final bool enabled;
+
+  const StateButton({Key? key, required this.enabled}) : super(key: key);
 
   @override
   _StateButtonState createState() => _StateButtonState();
 }
 
 class _StateButtonState extends State<StateButton> {
-  String _state = "OFF";
+  Color backgroundColor = const Color(0xFF040423);
+  Color successColor = const Color(0xFF3A6FCC);
+  Color errorColor = const Color(0xFFED1C24);
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +21,19 @@ class _StateButtonState extends State<StateButton> {
       width: 140,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          gradient: const RadialGradient(
+          gradient: RadialGradient(
               radius: 1,
               focalRadius: 0,
               center: Alignment.center,
-              colors: [Color(0xFF040423), Color(0xFFED1C24)]),
+              colors: [
+                backgroundColor,
+                widget.enabled ? successColor : errorColor
+              ]),
           border: Border.all(
             color: Colors.white,
           )),
       child: Text(
-        _state,
+        widget.enabled ? "ON" : "OFF",
         style: const TextStyle(
             color: Colors.white, fontFamily: 'Conthrax', fontSize: 20),
       ),

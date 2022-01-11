@@ -1,27 +1,33 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class CustomProgressBar extends StatefulWidget {
-  CustomProgressBar() : super();
+  final int currentPressure;
+  const CustomProgressBar({Key? key, required this.currentPressure})
+      : super(key: key);
 
   @override
   _CustomProgressBarState createState() => _CustomProgressBarState();
 }
 
 class _CustomProgressBarState extends State<CustomProgressBar> {
+  final int maxPressure = 150;
+
   @override
   Widget build(BuildContext context) {
     return RotatedBox(
       quarterTurns: -1,
       child: CustomPaint(
         foregroundPainter: ProgressBarPainter(),
-        child: const SizedBox(
-          width: 150, // inversed height
-          height: 30, // inversed width
+        child: SizedBox(
+          width: 250, // inversed height
+          height: 35, // inversed width
           child: LinearProgressIndicator(
-            value: 0.5, //currentPressure / maxPressure,
+            value: widget.currentPressure / maxPressure,
             color: Colors.red,
             minHeight: 10,
-            backgroundColor: Color(0xFF8E0E0E),
+            backgroundColor: const Color(0xFF8E0E0E),
           ),
         ),
       ),
