@@ -102,6 +102,9 @@ class _HomeState extends State<Home> {
             event.isKeyPressed(LogicalKeyboardKey.space)) {
           continueExperience();
         }
+        if (event.isKeyPressed(LogicalKeyboardKey.keyR)) {
+          wsManager.initWS();
+        }
       },
       child: Scaffold(
           backgroundColor: const Color(0xFF040423),
