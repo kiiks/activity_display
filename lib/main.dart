@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Home(),
-      //home: ErrorPage(),
+      //home: Home(),
+      home: ErrorPage(),
     );
   }
 }
@@ -63,9 +63,9 @@ class _HomeState extends State<Home> {
   final double margin = 10;
   final double defaultBoxWidth = 650;
 
-  double mazeBoxWidth = 650;
-  double pumpBoxWidth = 350;
-  double desertBoxWidth = 650;
+  double mazeBoxWidth = 700;
+  double pumpBoxWidth = 400;
+  double desertBoxWidth = 700;
 
   bool mazeViewVisible = true;
   bool pumpViewVisible = true;
@@ -367,144 +367,175 @@ class _HomeState extends State<Home> {
                             color: Color.fromARGB(26, 255, 255, 255)),
                         child: Padding(
                           padding: const EdgeInsets.all(5),
-                          child: Column(
+                          child: Flex(
+                            direction:
+                                pumpPlaying ? Axis.horizontal : Axis.vertical,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               AspectRatio(
                                   aspectRatio: pumpViewVisible &&
                                           desertViewVisible
                                       ? _pumpVideoController.value.aspectRatio
-                                      : 1.36,
+                                      : 0.5,
                                   child: VideoPlayer(_pumpVideoController)),
                               Container(
-                                margin: const EdgeInsets.all(5),
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.white)),
+                                margin: pumpPlaying
+                                    ? const EdgeInsets.fromLTRB(20, 0, 0, 0)
+                                    : const EdgeInsets.all(0),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    const Text(
-                                      'Filtrage de l\'air',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 26,
-                                          fontFamily: 'Conthrax'),
-                                    ),
-                                    const Text(
-                                      'Récuprération du CO2',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 26,
-                                          fontFamily: 'Advent Pro'),
-                                    ),
                                     Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          0, 25, 0, 15),
-                                      child: Row(
+                                      margin: const EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.white)),
+                                      child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
                                         children: [
+                                          const Text(
+                                            'Filtrage de l\'air',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 26,
+                                                fontFamily: 'Conthrax'),
+                                          ),
+                                          const Text(
+                                            'Récuprération du CO2',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 26,
+                                                fontFamily: 'Advent Pro'),
+                                          ),
                                           Container(
                                             margin: const EdgeInsets.fromLTRB(
-                                                0, 0, 20, 0),
-                                            child: const Text(
-                                              'ÉTAT',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 26,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontFamily: 'Advent Pro'),
+                                                0, 25, 0, 15),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  margin:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 20, 0),
+                                                  child: const Text(
+                                                    'ÉTAT',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 26,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontFamily:
+                                                            'Advent Pro'),
+                                                  ),
+                                                ),
+                                                StateButton(enabled: pumpDone)
+                                              ],
                                             ),
                                           ),
-                                          StateButton(enabled: pumpDone)
+                                          Container(
+                                            margin: const EdgeInsets.fromLTRB(
+                                                0, 15, 0, 15),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  margin:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 20, 0),
+                                                  child: CustomPaint(
+                                                      foregroundPainter:
+                                                          StateIndicatorPainter(
+                                                              enabled:
+                                                                  pumpDone),
+                                                      child: const SizedBox(
+                                                        width: 25,
+                                                        height: 25,
+                                                      )),
+                                                ),
+                                                pumpDone
+                                                    ? const Text(
+                                                        'SYSTÈME AUTONOMNE',
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0xFF3A6FCC),
+                                                            fontSize: 17,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontFamily:
+                                                                'Conthrax'),
+                                                      )
+                                                    : const Text(
+                                                        'BESOIN INTERVENTION',
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0xFFED1C24),
+                                                            fontSize: 17,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontFamily:
+                                                                'Conthrax'),
+                                                      ),
+                                              ],
+                                            ),
+                                          )
                                         ],
                                       ),
                                     ),
                                     Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          0, 15, 0, 15),
+                                      margin: const EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.white)),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
                                           Container(
                                             margin: const EdgeInsets.fromLTRB(
-                                                0, 0, 20, 0),
-                                            child: CustomPaint(
-                                                foregroundPainter:
-                                                    StateIndicatorPainter(
-                                                        enabled: pumpDone),
-                                                child: const SizedBox(
-                                                  width: 25,
-                                                  height: 25,
-                                                )),
+                                                0, 0, 50, 0),
+                                            child: CustomProgressBar(
+                                                currentPressure:
+                                                    currentPressure),
                                           ),
-                                          pumpDone
-                                              ? const Text(
-                                                  'SYSTÈME AUTONOMNE',
+                                          Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                const Text(
+                                                  'PRESSION À ENVOYER',
                                                   style: TextStyle(
-                                                      color: Color(0xFF3A6FCC),
-                                                      fontSize: 17,
+                                                      color: Colors.white,
+                                                      fontFamily: 'Advent Pro',
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      fontFamily: 'Conthrax'),
-                                                )
-                                              : const Text(
-                                                  'BESOIN INTERVENTION',
-                                                  style: TextStyle(
-                                                      color: Color(0xFFED1C24),
-                                                      fontSize: 17,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontFamily: 'Conthrax'),
+                                                      fontSize: 20),
                                                 ),
+                                                Text(
+                                                  ((currentPressure /
+                                                                  maxPressure) *
+                                                              100)
+                                                          .round()
+                                                          .toString() +
+                                                      '%',
+                                                  style: const TextStyle(
+                                                      color: Color(0xFFED1C24),
+                                                      fontFamily: 'Conthrax',
+                                                      fontSize: 34,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )
+                                              ])
                                         ],
                                       ),
                                     )
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.all(5),
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.white)),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          0, 0, 50, 0),
-                                      child: CustomProgressBar(
-                                          currentPressure: currentPressure),
-                                    ),
-                                    Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          const Text(
-                                            'PRESSION À ENVOYER',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontFamily: 'Advent Pro',
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20),
-                                          ),
-                                          Text(
-                                            ((currentPressure / maxPressure) *
-                                                        100)
-                                                    .round()
-                                                    .toString() +
-                                                '%',
-                                            style: const TextStyle(
-                                                color: Color(0xFFED1C24),
-                                                fontFamily: 'Conthrax',
-                                                fontSize: 34,
-                                                fontWeight: FontWeight.bold),
-                                          )
-                                        ])
                                   ],
                                 ),
                               )
@@ -525,17 +556,25 @@ class _HomeState extends State<Home> {
                         margin: EdgeInsets.all(margin),
                         decoration: const BoxDecoration(
                             color: Color.fromARGB(26, 255, 255, 255)),
-                        child: Column(
+                        child: Flex(
+                          direction:
+                              desertPlaying ? Axis.horizontal : Axis.vertical,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
                               margin: const EdgeInsets.all(15),
                               child: AspectRatio(
-                                  aspectRatio: 1.36,
+                                  aspectRatio: desertPlaying ? 0.75 : 1.36,
                                   child: VideoPlayer(_desertVideoController)),
                             ),
-                            Row(
+                            Flex(
+                              direction: desertPlaying
+                                  ? Axis.vertical
+                                  : Axis.horizontal,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Flexible(
+                                  flex: desertPlaying ? 0 : 1,
                                   child: Container(
                                     margin: const EdgeInsets.all(5),
                                     padding: const EdgeInsets.all(10),
@@ -561,8 +600,10 @@ class _HomeState extends State<Home> {
                                           ),
                                           Container(
                                             margin: const EdgeInsets.fromLTRB(
-                                                0, 25, 0, 15),
+                                                0, 40, 0, 20),
                                             child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
                                                 Container(
                                                   margin:
@@ -585,48 +626,52 @@ class _HomeState extends State<Home> {
                                               ],
                                             ),
                                           ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Container(
-                                                margin:
-                                                    const EdgeInsets.fromLTRB(
-                                                        0, 0, 10, 0),
-                                                child: CustomPaint(
-                                                    foregroundPainter:
-                                                        StateIndicatorPainter(
-                                                            enabled:
-                                                                desertDone),
-                                                    child: const SizedBox(
-                                                      width: 25,
-                                                      height: 25,
-                                                    )),
-                                              ),
-                                              desertDone
-                                                  ? const Text(
-                                                      'SYSTÈME AUTONOMNE',
-                                                      style: TextStyle(
-                                                          color:
-                                                              Color(0xFF3A6FCC),
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontFamily:
-                                                              'Conthrax'),
-                                                    )
-                                                  : const Text(
-                                                      'BESOIN INTERVENTION',
-                                                      style: TextStyle(
-                                                          color:
-                                                              Color(0xFFED1C24),
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontFamily:
-                                                              'Conthrax'),
-                                                    ),
-                                            ],
+                                          Container(
+                                            margin: const EdgeInsets.fromLTRB(
+                                                0, 20, 0, 10),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  margin:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 10, 0),
+                                                  child: CustomPaint(
+                                                      foregroundPainter:
+                                                          StateIndicatorPainter(
+                                                              enabled:
+                                                                  desertDone),
+                                                      child: const SizedBox(
+                                                        width: 25,
+                                                        height: 25,
+                                                      )),
+                                                ),
+                                                desertDone
+                                                    ? const Text(
+                                                        'SYSTÈME AUTONOMNE',
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0xFF3A6FCC),
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontFamily:
+                                                                'Conthrax'),
+                                                      )
+                                                    : const Text(
+                                                        'BESOIN INTERVENTION',
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0xFFED1C24),
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontFamily:
+                                                                'Conthrax'),
+                                                      ),
+                                              ],
+                                            ),
                                           ),
                                           Visibility(
                                             maintainSize: true,
@@ -634,11 +679,13 @@ class _HomeState extends State<Home> {
                                             maintainState: true,
                                             visible: !desertDone,
                                             child: const Text(
-                                                'Câblage défectueux - Intervention requise',
-                                                style: TextStyle(
-                                                    color: Color(0xFFED1C24),
-                                                    fontFamily: 'Advent Pro',
-                                                    fontSize: 26)),
+                                              'Câblage défectueux - Intervention requise',
+                                              style: TextStyle(
+                                                  color: Color(0xFFED1C24),
+                                                  fontFamily: 'Advent Pro',
+                                                  fontSize: 26),
+                                              textAlign: TextAlign.center,
+                                            ),
                                           )
                                         ],
                                       ),
@@ -646,6 +693,7 @@ class _HomeState extends State<Home> {
                                   ),
                                 ),
                                 Flexible(
+                                  flex: desertPlaying ? 0 : 1,
                                   child: Container(
                                     margin: const EdgeInsets.all(5),
                                     padding: const EdgeInsets.all(10),
@@ -661,22 +709,33 @@ class _HomeState extends State<Home> {
                                                 fontFamily: 'Advent Pro',
                                                 fontSize: 26),
                                             textAlign: TextAlign.center),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            LightIndicator(
-                                              lightsEnabled:
-                                                  nbDesertLEDsEnbaled,
-                                            ),
-                                            Text(
-                                                nbDesertLEDsEnbaled.toString() +
-                                                    "/3",
-                                                style: const TextStyle(
-                                                    color: Color(0xFFED1C24),
-                                                    fontFamily: 'Conthrax',
-                                                    fontSize: 32))
-                                          ],
+                                        Container(
+                                          margin: const EdgeInsets.fromLTRB(
+                                              0, 40, 0, 0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Container(
+                                                margin: desertPlaying
+                                                    ? const EdgeInsets.fromLTRB(
+                                                        0, 0, 40, 0)
+                                                    : const EdgeInsets.all(0),
+                                                child: LightIndicator(
+                                                  lightsEnabled:
+                                                      nbDesertLEDsEnbaled,
+                                                ),
+                                              ),
+                                              Text(
+                                                  nbDesertLEDsEnbaled
+                                                          .toString() +
+                                                      "/3",
+                                                  style: const TextStyle(
+                                                      color: Color(0xFFED1C24),
+                                                      fontFamily: 'Conthrax',
+                                                      fontSize: 32))
+                                            ],
+                                          ),
                                         )
                                       ],
                                     ),
@@ -724,7 +783,7 @@ class _HomeState extends State<Home> {
         mazeViewVisible = false;
         _mazeVideoController.pause();
         desertViewVisible = true;
-        desertBoxWidth = 800;
+        desertBoxWidth = 1500;
         _desertVideoController.play();
       });
       return;
@@ -741,7 +800,7 @@ class _HomeState extends State<Home> {
       setState(() {
         pumpViewVisible = true;
         _pumpVideoController.play();
-        pumpBoxWidth = 650;
+        pumpBoxWidth = 1000;
         mazeViewVisible = false;
         _mazeVideoController.pause();
         desertViewVisible = false;

@@ -10,8 +10,9 @@ class WebSocketManager {
     initWS();
   }
 
-  //static const wsName = "ws://192.168.4.1/ws";
-  static const wsName = "wss://echo.websocket.org";
+  static const wsName = "ws://192.168.4.1/ws";
+  //static const wsName = "wss://echo.websocket.org";
+
   late WebSocketChannel channel;
   Function(String data)? listenerCallback;
 
@@ -24,6 +25,11 @@ class WebSocketManager {
   void initWS() {
     channel = WebSocketChannel.connect(Uri.parse(wsName));
     listen();
+  }
+
+  void ping() {
+    print("sending ping...");
+    channel.sink.add("ping");
   }
 
   void listen() {
