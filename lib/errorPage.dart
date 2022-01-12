@@ -1,4 +1,5 @@
 import 'package:activity_display/main.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
@@ -12,6 +13,7 @@ class ErrorPage extends StatefulWidget {
 
 class _ErrorPageState extends State<ErrorPage> {
   late VideoPlayerController _videoController;
+  AudioPlayer _audioPlayer = AudioPlayer();
 
   @override
   void initState() {
@@ -32,6 +34,12 @@ class _ErrorPageState extends State<ErrorPage> {
     super.dispose();
   }
 
+  playLocal() async {
+    int result = await _audioPlayer.play("../assets/audio/error_sound.mp3",
+        isLocal: true);
+    print(result);
+  }
+
   @override
   Widget build(BuildContext context) {
     return RawKeyboardListener(
@@ -41,6 +49,7 @@ class _ErrorPageState extends State<ErrorPage> {
         // Launch error video when "Space" is pressed
         if (value.isKeyPressed(LogicalKeyboardKey.space) ||
             value.isKeyPressed(LogicalKeyboardKey.enter)) {
+          playLocal();
           _videoController.play();
           setState(() {});
         }
