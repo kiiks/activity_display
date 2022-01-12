@@ -21,8 +21,8 @@ class _CustomProgressBarState extends State<CustomProgressBar> {
       child: CustomPaint(
         foregroundPainter: ProgressBarPainter(),
         child: SizedBox(
-          width: 250, // inversed height
-          height: 35, // inversed width
+          width: 300, // inversed height
+          height: 45, // inversed width
           child: LinearProgressIndicator(
             value: widget.currentPressure / maxPressure,
             color: Colors.red,
