@@ -103,6 +103,7 @@ class _HomeState extends State<Home> {
           continueExperience();
         }
         if (event.isKeyPressed(LogicalKeyboardKey.keyR)) {
+          wsManager.reconnectionAttempt = 0;
           wsManager.initWS();
         }
       },
