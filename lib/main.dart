@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 import 'package:activity_display/errorPage.dart';
@@ -77,6 +78,16 @@ class _HomeState extends State<Home> {
   late VideoPlayerController _mazeVideoController;
   late VideoPlayerController _desertVideoController;
 
+  // Audio variables
+
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
+  final String mazeSound = "../assets/audio/maze_sound.mp3";
+  final String desertSound = "../assets/audio/desert_sound.mp3";
+  final String pumpSound = "../assets/audio/pump_sound.mp3";
+  final String okSound = "../assets/audio/ok_sound.mp3";
+  final String endSound = "../assets/audio/end_sound.mp3";
+
   @override
   void initState() {
     super.initState();
@@ -105,6 +116,9 @@ class _HomeState extends State<Home> {
         if (event.isKeyPressed(LogicalKeyboardKey.keyR)) {
           wsManager.reconnectionAttempt = 0;
           wsManager.initWS();
+        }
+        if (event.isKeyPressed(LogicalKeyboardKey.keyE)) {
+          playSound(endSound);
         }
       },
       child: Scaffold(
@@ -755,6 +769,10 @@ class _HomeState extends State<Home> {
     );
   }
 
+  playSound(String path) async {
+    _audioPlayer.play(path, isLocal: true);
+  }
+
   void continueExperience() {
     if (!mazePlaying && !mazeDone) {
       mazePlaying = true;
@@ -771,6 +789,7 @@ class _HomeState extends State<Home> {
     if (!mazeDone) {
       setState(() {
         mazeDone = true;
+        playSound(mazeSound);
       });
       return;
     }
@@ -791,6 +810,7 @@ class _HomeState extends State<Home> {
     if (!desertDone) {
       setState(() {
         desertDone = true;
+        playSound(desertSound);
       });
       return;
     }
@@ -841,12 +861,14 @@ class _HomeState extends State<Home> {
       case Activity.LABYRINTHE:
         if (commandType == CommandType.INFO) {
           if (nbMazeLEDsEnbaled == 3) return;
+          playSound(okSound);
           nbMazeLEDsEnbaled = int.parse(commandData);
         }
         break;
       case Activity.DESERT:
         if (commandType == CommandType.INFO) {
           if (nbDesertLEDsEnbaled == 3) return;
+          playSound(okSound);
           nbDesertLEDsEnbaled = int.parse(commandData);
         }
         break;
@@ -855,6 +877,7 @@ class _HomeState extends State<Home> {
           final newValue = int.parse(commandData);
           if (newValue >= maxPressure) {
             setState(() {
+              playSound(pumpSound);
               currentPressure = 100;
             });
             return;

@@ -30,14 +30,13 @@ class _ErrorPageState extends State<ErrorPage> {
 
   @override
   void dispose() {
-    _videoController.dispose();
     super.dispose();
+    _videoController.dispose();
+    _audioPlayer.dispose();
   }
 
-  playLocal() async {
-    int result = await _audioPlayer.play("../assets/audio/error_sound.mp3",
-        isLocal: true);
-    print(result);
+  playErrorSound() async {
+    _audioPlayer.play("../assets/audio/error_sound.mp3", isLocal: true);
   }
 
   @override
@@ -49,7 +48,7 @@ class _ErrorPageState extends State<ErrorPage> {
         // Launch error video when "Space" is pressed
         if (value.isKeyPressed(LogicalKeyboardKey.space) ||
             value.isKeyPressed(LogicalKeyboardKey.enter)) {
-          playLocal();
+          playErrorSound();
           _videoController.play();
           setState(() {});
         }
@@ -71,8 +70,8 @@ class _ErrorPageState extends State<ErrorPage> {
     if (!_videoController.value.isInitialized) return;
 
     if (_videoController.value.position == _videoController.value.duration) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const Home()));
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) => const Home()), (r) => false);
     }
   }
 }
