@@ -831,6 +831,7 @@ class _HomeState extends State<Home> {
     if (!pumpDone) {
       setState(() {
         pumpDone = true;
+        playSound(pumpSound);
       });
       return;
     }
@@ -877,7 +878,6 @@ class _HomeState extends State<Home> {
           final newValue = int.parse(commandData);
           if (newValue >= maxPressure) {
             setState(() {
-              playSound(pumpSound);
               currentPressure = 100;
             });
             return;
